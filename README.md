@@ -1,2 +1,2 @@
 # budu-dubu-wedding
-wedding invitatio
+wedding invitation
