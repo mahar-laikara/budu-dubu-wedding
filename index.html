@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding Celebration of Budu & Dubu</title>
+    <meta name="description" content="You are cordially invited to celebrate the love and union of Budu and Dubu. View schedule details, scratch card to reveal the date, and RSVP.">
+    <link rel="stylesheet" href="style.css">
+    <!-- QR Code Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- HTML5 QR Code Scanner Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+
+    <!-- Centered mobile viewport container -->
+    <div class="app-container">
+        
+        <!-- Elegant thin outer border for design aesthetics -->
+        <div class="app-border"></div>
+
+        <!-- HERO COVER PAGE (Section 1) -->
+        <section class="hero-section" id="hero">
+            <!-- Floating audio control button (Only on front page) -->
+            <button class="audio-control" id="audio-toggle" aria-label="Toggle background music">
+                <!-- Speaker Muted (default) -->
+                <svg id="audio-icon-muted" viewBox="0 0 24 24" style="display: block;">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                </svg>
+                <!-- Speaker Playing -->
+                <svg id="audio-icon-playing" viewBox="0 0 24 24" style="display: none;">
+                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                </svg>
+            </button>
+
+            <!-- Background Audio Element (High-speed Direct Stanford Piano MP3) -->
+            <audio id="bg-audio" loop src="https://ccrma.stanford.edu/~jos/mp3/pno-cs.mp3" preload="auto"></audio>
+
+            <div class="hero-subtitle">The Wedding Celebration of</div>
+            
+            <div class="hero-names">
+                <h1>Budu</h1>
+                <div class="ampersand">&</div>
+                <h1>Dubu</h1>
+            </div>
+
+            <div class="hero-details-box">
+                <p class="hero-tagline">Request the honour of your presence</p>
+                <p class="hero-detail">Love Palace, Mustang City, Love Country</p>
+            </div>
+
+            <div class="scroll-prompt" onclick="scrollToSection('scratch')">
+                <span>Scroll Down</span>
+                <svg viewBox="0 0 24 24">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- SCRATCH TO REVEAL CARD (Section 2) -->
+        <section class="scratch-section fade-in-section" id="scratch">
+            <h2 class="section-title">Save The Date</h2>
+            <p class="section-subtitle">Scratch to reveal the magical details</p>
+
+            <div class="scratch-card-container">
+                <!-- Revealed content -->
+                <div class="scratch-card-content">
+                    <div class="revealed-date" id="revealed-date-text">27 SEPTEMBER 2026</div>
+                    <div class="revealed-day">Sunday &bull; 8:00 PM</div>
+                    <div class="revealed-venue">Love Palace, Mustang City, Love Country</div>
+                </div>
+                <!-- Interactive Canvas (scratch layer) -->
+                <canvas id="scratch-canvas" width="320" height="200"></canvas>
+            </div>
+
+            <p class="scratch-hint" id="scratch-hint-text">Gently rub your finger/mouse to scratch off the gold foil</p>
+        </section>
+
+        <!-- COUNTDOWN TIMER (Section 3) -->
+        <section class="countdown-section fade-in-section" id="countdown">
+            <h2 class="section-title">Counting Down</h2>
+            <p class="section-subtitle">To our lifetime together</p>
+
+            <div class="countdown-container">
+                <div class="countdown-box">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Days</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Hours</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Mins</span>
+                </div>
+                <div class="countdown-box">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Secs</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRAM TIMELINE (Section 4) -->
+        <section class="timeline-section fade-in-section" id="timeline">
+            <h2 class="section-title">Program Timeline</h2>
+            <p class="section-subtitle">The celebration schedule</p>
+
+            <div class="timeline-container">
+                <!-- Timeline item 1 -->
+                <div class="timeline-item">
+                    <span class="timeline-time">8:00 PM</span>
+                    <h3 class="timeline-title">Guest Arrival</h3>
+                    <p class="timeline-desc">Welcome greetings, mocktails, and soft violin prelude to set the romantic mood.</p>
+                </div>
+                <!-- Timeline item 2 -->
+                <div class="timeline-item">
+                    <span class="timeline-time">10:00 PM</span>
+                    <h3 class="timeline-title">Ceremony</h3>
+                    <p class="timeline-desc">The wedding ceremony, vows exchange, and blessings in the presence of family and friends.</p>
+                </div>
+                <!-- Timeline item 3 -->
+                <div class="timeline-item">
+                    <span class="timeline-time">10:30 PM</span>
+                    <h3 class="timeline-title">Grand Feast & Dinner</h3>
+                    <p class="timeline-desc">A lavish banquet dinner of gourmet cuisines, live instrumental music, and celebratory toasts.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP FORM (Section 5) -->
+        <section class="rsvp-section fade-in-section" id="rsvp">
+            <h2 class="section-title">Kindly RSVP</h2>
+            <p class="section-subtitle">Please respond by September 1, 2026</p>
+
+            <div class="rsvp-form" id="rsvp-form-container">
+                <form id="wedding-rsvp-form" onsubmit="handleRSVPSubmit(event)">
+                    <!-- Name Input -->
+                    <div class="form-group">
+                        <label for="guest-name">Full Name</label>
+                        <input type="text" id="guest-name" class="form-input" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <!-- Relationship selection (Friends & Family) -->
+                    <div class="form-group">
+                        <label for="guest-relation">Who are you?</label>
+                        <select id="guest-relation" class="form-input" required>
+                            <option value="" disabled selected>Select connection...</option>
+                            <option value="Family of Budu">Family of Budu</option>
+                            <option value="Family of Dubu">Family of Dubu</option>
+                            <option value="Friend of Budu">Friend of Budu</option>
+                            <option value="Friend of Dubu">Friend of Dubu</option>
+                            <option value="Mutual Friend">Mutual Friend</option>
+                            <option value="Well Wisher">Well Wisher / Guest</option>
+                        </select>
+                    </div>
+
+                    <!-- Attendance Radios -->
+                    <div class="form-group">
+                        <label>Will you join us?</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="attendance" value="attending" checked onclick="toggleGuestCount(true)">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Joyfully Attend</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="attendance" value="declined" onclick="toggleGuestCount(false)">
+                                <span class="radio-custom"></span>
+                                <span class="radio-label">Regretfully Decline</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Guest Count Select -->
+                    <div class="form-group" id="guest-count-group">
+                        <label for="guest-count">Total Guests</label>
+                        <select id="guest-count" class="form-input">
+                            <option value="1" selected>1 Person</option>
+                            <option value="2">2 Persons</option>
+                            <option value="3">3 Persons</option>
+                            <option value="4">4+ Persons</option>
+                        </select>
+                    </div>
+
+                    <!-- Warm Wishes Message -->
+                    <div class="form-group">
+                        <label for="guest-message">Warm Wishes</label>
+                        <textarea id="guest-message" class="form-input" rows="3" placeholder="Leave a message for Budu & Dubu..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Submit Response</button>
+                </form>
+            </div>
+
+            <!-- RSVP Submission Success State -->
+            <div class="rsvp-success" id="rsvp-success-state">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                <h3>Thank You!</h3>
+                <p id="rsvp-success-message">Your response has been saved. We look forward to celebrating with you!</p>
+                
+                <!-- Ticket QR code container -->
+                <div class="ticket-container" id="ticket-container">
+                    <div class="ticket-header">ENTRY PASS</div>
+                    <div class="ticket-body">
+                        <div id="rsvp-qrcode"></div>
+                        <div class="ticket-guest-name" id="ticket-guest-name">GUEST TICKET</div>
+                    </div>
+                    <div class="ticket-footer">SCAN AT ENTRANCE</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ADMIN CHECK-IN PORTAL LINK & INTERFACE -->
+        <div class="admin-portal-link">
+            <button class="btn-admin-toggle" id="btn-admin-toggle" onclick="toggleAdminPortal()">Organizer Portal</button>
+        </div>
+
+        <div class="admin-portal" id="admin-portal">
+            <div class="admin-portal-content">
+                <div class="admin-header">
+                    <h3>Organizer Portal</h3>
+                    <button class="btn-close-admin" onclick="toggleAdminPortal()">&times;</button>
+                </div>
+                
+                <!-- Passcode Screen -->
+                <div id="admin-auth-screen">
+                    <p class="admin-instruction">Enter pin code to open QR scanner:</p>
+                    <input type="password" id="admin-passcode" class="form-input" placeholder="••••" style="text-align: center; font-size: 1.4rem; letter-spacing: 5px; max-width: 200px; margin: 15px auto 0 auto; display: block;">
+                    <button class="btn-submit" onclick="authenticateAdmin()" style="margin-top: 15px; max-width: 200px; margin-left: auto; margin-right: auto; display: block;">Unlock Scanner</button>
+                    <p id="admin-auth-error" style="color: #ff6b6b; font-size: 0.85rem; margin-top: 10px; display: none;">Invalid Passcode. Hint: Use 1234</p>
+                </div>
+
+                <!-- Dashboard Screen (Scanner & Guest List tabs) -->
+                <div id="admin-scanner-screen" style="display: none; width: 100%;">
+                    <!-- Tab headers -->
+                    <div class="admin-tabs" style="display: flex; border-bottom: 1.5px solid rgba(212, 175, 55, 0.2); margin-bottom: 20px;">
+                        <button class="tab-btn active" id="tab-btn-scanner" onclick="switchAdminTab('scanner')" style="flex: 1; background: transparent; border: none; padding: 12px; color: var(--text-gray); font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; border-bottom: 2px solid transparent;">Scan Code</button>
+                        <button class="tab-btn" id="tab-btn-guests" onclick="switchAdminTab('guests')" style="flex: 1; background: transparent; border: none; padding: 12px; color: var(--text-gray); font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; border-bottom: 2px solid transparent;">All Guest Tickets</button>
+                    </div>
+
+                    <!-- Tab 1: Scanner -->
+                    <div class="tab-content" id="tab-content-scanner" style="display: block;">
+                        <p class="admin-instruction">Align guest ticket QR code within camera frame:</p>
+                        <div class="scanner-window-wrapper">
+                            <div id="qr-reader"></div>
+                        </div>
+                        
+                        <div class="scanner-stats">
+                            Total Checked In: <span id="checked-in-count" style="font-weight: 700; color: var(--gold-primary);">0</span>
+                        </div>
+                        
+                        <div class="scanner-status" id="scanner-status-box">Ready to scan...</div>
+                        
+                        <button class="btn-submit" id="btn-toggle-camera" onclick="toggleCamera()" style="background: var(--bg-primary); color: var(--gold-primary); border: 1.5px solid var(--gold-primary); margin-top: 15px;">Start Camera</button>
+                    </div>
+
+                    <!-- Tab 2: Guest List & Tickets -->
+                    <div class="tab-content" id="tab-content-guests" style="display: none;">
+                        <p class="admin-instruction">Click "View Pass" to display and print a guest's entrance ticket:</p>
+                        
+                        <div class="guest-table-wrapper" style="overflow-x: auto; width: 100%; margin-top: 15px;">
+                            <table class="guest-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                                <thead>
+                                    <tr style="border-bottom: 1.5px solid rgba(212, 175, 55, 0.3); color: var(--gold-light); font-family: var(--font-heading); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;">
+                                        <th style="padding: 10px 5px;">Guest</th>
+                                        <th style="padding: 10px 5px; text-align: center;">Qty</th>
+                                        <th style="padding: 10px 5px; text-align: center;">Arrived</th>
+                                        <th style="padding: 10px 5px; text-align: right;">Pass</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="guest-list-tbody">
+                                    <!-- Dynamic rows via script -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inner Modal for printing specific tickets -->
+                <div class="ticket-preview-modal" id="ticket-preview-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 16, 11, 0.95); z-index: 3000; align-items: center; justify-content: center; padding: 20px;">
+                    <div class="ticket-preview-content" style="background: var(--bg-secondary); border: 1.5px solid var(--gold-primary); border-radius: 15px; padding: 25px 20px; width: 100%; max-width: 320px; position: relative; text-align: center;">
+                        <button class="btn-close-preview" onclick="closeTicketPreview()" style="position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: var(--text-white); font-size: 1.8rem; line-height: 1; cursor: pointer;">&times;</button>
+                        
+                        <div class="ticket-container" id="admin-ticket-container" style="margin: 20px auto 15px auto;">
+                            <div class="ticket-header">ENTRY PASS</div>
+                            <div class="ticket-body">
+                                <div id="admin-rsvp-qrcode" style="background: #ffffff; padding: 12px; border-radius: 8px; display: inline-block; margin-bottom: 12px;"></div>
+                                <div class="ticket-guest-name" id="admin-ticket-guest-name">GUEST PASS</div>
+                            </div>
+                            <div class="ticket-footer">SCAN AT ENTRANCE</div>
+                        </div>
+                        
+                        <button class="btn-submit" onclick="printTicket()" style="margin-top: 10px;">Print Pass</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-logo">B & D</div>
+            <div class="footer-copy">Forever & Always &bull; 2026</div>
+        </footer>
+
+    </div>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+</body>
+</html>
